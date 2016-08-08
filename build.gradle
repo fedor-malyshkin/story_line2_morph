@@ -1,0 +1,28 @@
+// Apply the java plugin to add support for Java
+apply plugin:'application'
+mainClassName = "ru.nlp_project.story_line2.morph.MorphDBConverter"
+
+run {
+  // set heap size for the test JVM(s)
+  minHeapSize = "1024m"
+  maxHeapSize = "2048m"
+
+  // set JVM arguments for the test JVM(s)
+  jvmArgs '-XX:+HeapDumpOnOutOfMemoryError', '-XX:-UseGCOverheadLimit'
+}
+
+
+test {
+  // set heap size for the test JVM(s)
+  minHeapSize = "1024m"
+  maxHeapSize = "2048m"
+
+  // set JVM arguments for the test JVM(s)
+  jvmArgs '-XX:+HeapDumpOnOutOfMemoryError', '-XX:-UseGCOverheadLimit'
+}
+
+
+javadoc {
+     failOnError=false
+}
+
