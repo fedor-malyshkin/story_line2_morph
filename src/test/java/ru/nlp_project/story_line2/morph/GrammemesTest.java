@@ -1,13 +1,11 @@
 package ru.nlp_project.story_line2.morph;
 
-import java.util.Set;
-import static org.junit.Assert.*;
 import org.junit.Test;
 
-import ru.nlp_project.story_line2.morph.GrammemeUtils.GrammemeEnum;
+import static org.junit.Assert.assertEquals;
 
 public class GrammemesTest {
-
+/*
   @Test
   public void testMatchSetOfGrammemeEnum() {
     Grammemes testable = new Grammemes();
@@ -24,5 +22,14 @@ public class GrammemesTest {
     guSet = GrammemeUtils.createGrammemesSetByCSVMyTags("past,futr");
     assertFalse(testable.match(guSet));
   }
+*/
+	
 
+	  @Test
+	  public void testGrammemes() {
+	    Grammemes gr = new Grammemes();
+	    GrammemeUtils.fillGrammemesByCSVMyTags("noun, gent, sing", gr);
+	    assertEquals("noun", gr.getByGrammemeGroupIndex(GrammemeUtils.POS_NDX).toString());
+	    assertEquals("gent", gr.getByGrammemeGroupIndex(GrammemeUtils.CASE_NDX).toString());
+	  }
 }

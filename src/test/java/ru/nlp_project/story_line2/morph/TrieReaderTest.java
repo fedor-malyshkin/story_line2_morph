@@ -16,8 +16,7 @@ public class TrieReaderTest {
 
   private Grammemes createGrammemes(GrammemeEnum grammeme) {
     Grammemes grammemes = new Grammemes();
-    grammemes.mainGrammems.put(GrammemeUtils.POS_NDX, grammeme);
-    grammemes.allGrammems.add(grammeme);
+    grammemes.grammSet.add(grammeme);
     return grammemes;
   }
 
@@ -51,7 +50,7 @@ public class TrieReaderTest {
 
     assertEquals(1, results.size());
     assertEquals("делать", results.get(0).lemm);
-    assertEquals("nomn [nomn]", results.get(0).grammemes.toString());
+    assertEquals("nomn", results.get(0).grammemes.toString());
   }
 
   @Test

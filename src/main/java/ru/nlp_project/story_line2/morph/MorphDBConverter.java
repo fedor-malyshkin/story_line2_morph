@@ -373,7 +373,7 @@ public class MorphDBConverter {
            * jg.writeString(gs);
            */
           jg.writeFieldName("ag");
-          String gs = joinGrammems(e.grammemes.allGrammems);
+          String gs = joinGrammems(e.grammemes.grammSet);
           jg.writeString(gs);
 
           jg.writeEndObject();

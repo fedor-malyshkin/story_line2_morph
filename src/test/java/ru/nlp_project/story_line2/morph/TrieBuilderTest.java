@@ -23,8 +23,7 @@ public class TrieBuilderTest {
 
   private Grammemes createGrammemes(GrammemeEnum grammeme) {
     Grammemes grammemes = new Grammemes();
-    grammemes.mainGrammems.put(GrammemeUtils.POS_NDX, grammeme);
-    grammemes.allGrammems.add(grammeme);
+    grammemes.grammSet.add(grammeme);
     return grammemes;
   }
 
@@ -52,7 +51,7 @@ public class TrieBuilderTest {
     assertEquals("уть", m.endingModel.endings.get(1).value);
     assertEquals("тут", m.endingModel.endings.get(2).value);
     assertEquals("муть", m.endingModel.endings.get(3).value);
-    assertEquals("noun [noun]",
+    assertEquals("noun",
         m.endingModel.endings.get(3).grammemes.toString());
   }
 

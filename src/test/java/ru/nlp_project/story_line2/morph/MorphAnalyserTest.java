@@ -26,10 +26,10 @@ public class MorphAnalyserTest {
     List<WordformAnalysisResult> analyse = testable.analyse("премьер");
     assertNotNull(analyse);
     assertEquals(2, analyse.size());
-    assertEquals("премьер-noun [noun, nomn, masc, anim, sing]",
+    assertEquals("премьер-noun, nomn, masc, anim, sing",
         String.format("%s-%s", analyse.get(0).lemm,
             analyse.get(0).grammemes.toString()));
-    assertEquals("премьера-noun [noun, gent, femn, inan, plur]",
+    assertEquals("премьера-noun, gent, femn, inan, plur",
         String.format("%s-%s", analyse.get(1).lemm,
             analyse.get(1).grammemes.toString()));
   }
@@ -41,8 +41,8 @@ public class MorphAnalyserTest {
     assertEquals(4, analyse.size());
     assertEquals("тока", analyse.get(0).lemm);
     assertEquals("ток", analyse.get(1).lemm);
-    assertEquals("prcl [prcl, infr]", analyse.get(0).grammemes.toString());
-    assertEquals("noun [noun, gen1, masc, inan, sing]",
+    assertEquals("prcl, infr", analyse.get(0).grammemes.toString());
+    assertEquals("noun, gen1, gent, masc, inan, sing",
         analyse.get(1).grammemes.toString());
     assertTrue(analyse.get(0).exactMatch);
   }
@@ -56,7 +56,7 @@ public class MorphAnalyserTest {
     assertEquals("ежи", analyse.get(0).lemm);
     assertEquals("ежи", analyse.get(1).lemm);
     assertEquals("ежи", analyse.get(2).lemm);
-    assertEquals("noun [noun, nomn, masc, anim, sing, fixd, sgtm, name]",
+    assertEquals("noun, nomn, masc, anim, sing, fixd, sgtm, name",
         analyse.get(0).grammemes.toString());
     assertTrue(analyse.get(0).exactMatch);
   }
