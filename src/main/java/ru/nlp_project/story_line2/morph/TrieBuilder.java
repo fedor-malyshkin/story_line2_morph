@@ -5,6 +5,13 @@ import java.util.Map;
 
 import ru.nlp_project.story_line2.morph.EndingModel.Ending;
 
+/**
+ * Класс для построения trie.
+ * 
+ * 
+ * @author fedor
+ *
+ */
 class TrieBuilder {
 
   private Trie trie = new Trie();

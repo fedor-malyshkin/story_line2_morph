@@ -8,6 +8,13 @@ import java.util.List;
 
 import ru.nlp_project.story_line2.morph.EndingModel.Ending;
 
+/**
+ * 
+ * Основной класс для морфологического анализа.
+ * 
+ * @author fedor
+ *
+ */
 public class MorphAnalyser {
 
   class Wordform {

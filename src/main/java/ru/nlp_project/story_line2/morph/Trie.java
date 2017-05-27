@@ -5,6 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Trie.
+ * 
+ * @author fedor
+ *
+ */
 class Trie {
   // Map<Integer, EndingModel> endingModelMap;
 

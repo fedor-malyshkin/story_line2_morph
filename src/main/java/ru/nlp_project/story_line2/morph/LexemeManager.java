@@ -4,6 +4,12 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
+/**
+ * КЛасс для работы с лексемами - их кэширования и возврата по идентификатору.
+ * 
+ * @author fedor
+ *
+ */
 public class LexemeManager {
   public static LexemeManager newInstance() {
     LexemeManager result = new LexemeManager();

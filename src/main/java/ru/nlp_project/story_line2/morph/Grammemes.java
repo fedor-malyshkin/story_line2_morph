@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import ru.nlp_project.story_line2.morph.GrammemeUtils.GrammemeEnum;
 
 /**
- * Граммемы.
+ * Граммемы (с контейнером на базе EnumSet).
  * 
  * 
  * @author fedor
@@ -183,23 +183,6 @@ public class Grammemes implements Serializable {
 		return other.grammSet.containsAll(grammSet);
 	}
 
-	/**
-	 * Метод потребуется для отработки ограничений типа "GU=&[sg,acc,nom]".
-	 * 
-	 * В данном случае требуется провести анализ того какого рода признаки есть наборе, сравнить их
-	 * с соответствующими признакамии граммем и при совпадении их всех - считать проверку успешной.
-	 * 
-	 */
-	/*
-	 * public boolean match(Set<GrammemeEnum> set) { boolean result = true; // создаем массив
-	 * индексов для проверки HashSet<Integer> indexes = new HashSet<Integer>(); for (GrammemeEnum e
-	 * : set) indexes.add(e.getIndex() / 100);
-	 * 
-	 * // проходим по индексам для проверки for (int i : indexes) result &=
-	 * set.contains(mainGrammems.get(i));
-	 * 
-	 * return result; }
-	 */
 
 	/**
 	 * 

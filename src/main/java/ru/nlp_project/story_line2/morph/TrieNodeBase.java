@@ -3,6 +3,13 @@ package ru.nlp_project.story_line2.morph;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 
+ * Узел в true.
+ * 
+ * @author fedor
+ *
+ */
 class TrieNodeBase {
   List<WordformInfo> wordformInfos;
   boolean internal;

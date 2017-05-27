@@ -1,9 +1,11 @@
 package ru.nlp_project.story_line2.morph;
 
 /**
-  * @author fedor
-  *
-  */
+ * Лист в trie
+ * 
+ * @author fedor
+ *
+ */
 class TrieNodeEnding {
   EndingModel endingModel = null;
   boolean internal;

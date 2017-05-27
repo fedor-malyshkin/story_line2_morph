@@ -2,6 +2,12 @@ package ru.nlp_project.story_line2.morph;
 
 import java.io.Serializable;
 
+/**
+ * Данные о словоформе (идентификатор в opencorpora, лемма.ю базовая часть и номер модели окончаний).
+ * 
+ * @author fedor
+ *
+ */
 class WordformInfo implements Serializable {
   /**
    * 
