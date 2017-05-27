@@ -1,11 +1,8 @@
 package ru.nlp_project.story_line2.morph;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
@@ -18,10 +15,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.LogManager;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import ru.nlp_project.story_line2.morph.MorphDBConverter.Paradigm;
 
@@ -67,7 +69,7 @@ public class MorphDBConverterTest {
 		InputStream stream = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream("ru/nlp_project/story_line2/morph/test2.zip");
 		testable = spy(testable);
-		testable.readZippedMorphDB(stream);
+		testable.convertZippedMorphDB(stream);
 		ArgumentCaptor<Paradigm> argument = ArgumentCaptor.forClass(Paradigm.class);
 		verify(testable, atLeast(1)).addParadigm(argument.capture());
 		assertEquals(
@@ -125,6 +127,13 @@ public class MorphDBConverterTest {
 		File file = testable.uncompressZip(stream, "test.json");
 		assertTrue(file.exists());
 		assertEquals(2099, file.length());
+	}
+
+	//@Ignore
+	@Test
+	public void downloadZippedMorphBD() {
+		File file = testable.downloadZippedMorphBD();
+		Assertions.assertThat(file.length()).isGreaterThan(1_000_000);
 	}
 
 }

@@ -10,8 +10,6 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import ru.nlp_project.story_line2.morph.GrammemeUtils.GrammemeEnum;
-
 public class TrieBuilderTest {
 
   private TrieBuilder testable;

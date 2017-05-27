@@ -2,6 +2,7 @@ package ru.nlp_project.story_line2.morph;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,9 +28,9 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonGenerator.Feature;
 
 import ru.nlp_project.story_line2.morph.EndingModel.Ending;
-import ru.nlp_project.story_line2.morph.GrammemeUtils.GrammemeEnum;
 
 /**
  * Morph database converter.
@@ -70,9 +71,12 @@ public class MorphDBConverter {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		MorphDBConverter converter = new MorphDBConverter();
 		converter.initialize();
+		File zippedMorphBD = converter.downloadZippedMorphBD();
+		FileInputStream fileInputStream = new FileInputStream(zippedMorphBD);
+		converter.convertZippedMorphDB(fileInputStream);
 	}
 
 	private Logger log;
@@ -200,7 +204,6 @@ public class MorphDBConverter {
 	}
 
 	void initialize() {
-
 		emCache = new HashMap<Integer, List<EndingModel>>(200);
 	}
 
@@ -235,6 +238,7 @@ public class MorphDBConverter {
 		fos = new FileOutputStream("out.json");
 		jsonFactory = new JsonFactory(); // or, for data binding,
 		jg = jsonFactory.createGenerator(fos);
+		jg.useDefaultPrettyPrinter();
 	}
 
 	private void jsonStartPS() throws IOException {
@@ -391,7 +395,7 @@ public class MorphDBConverter {
 		return true;
 	}
 
-	private void readerMorphDBInternal(InputStream is) throws XMLStreamException, IOException {
+	private void convertMorphDBInternal(InputStream is) throws XMLStreamException, IOException {
 		XMLInputFactory factory = XMLInputFactory.newInstance();
 		XMLStreamReader parser = factory.createXMLStreamReader(is);
 
@@ -427,14 +431,15 @@ public class MorphDBConverter {
 	 * 
 	 * @param inputStream
 	 */
-	public void readZippedMorphDB(InputStream inputStream) {
+	public void convertZippedMorphDB(InputStream inputStream) {
 		try {
-			File uncompressZip =
-					uncompressZip(inputStream, "corpus/files/export/dict/dict.opcorpora.xml");
+			File uncompressZip = uncompressZip(inputStream, "dict.opcorpora.xml");
 			FileInputStream fis = new FileInputStream(uncompressZip);
+			log.info("Start converting XML->JSON morph db.");
 			jsonStart();
-			readerMorphDBInternal(fis);
+			convertMorphDBInternal(fis);
 			jsonEnd();
+			log.info("End converting XML->JSON morph db.");
 			IOUtils.closeQuietly(fis);
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex.getMessage(), ex);

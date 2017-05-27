@@ -8,8 +8,6 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import ru.nlp_project.story_line2.morph.GrammemeUtils.GrammemeEnum;
-
 /**
  * Граммемы (с контейнером на базе EnumSet).
  * 
