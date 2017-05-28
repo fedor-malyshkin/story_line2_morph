@@ -18,6 +18,7 @@ import java.util.logging.LogManager;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -32,9 +33,7 @@ public class MorphDBConverterTest {
 	private MorphDBConverter testable;
 
 	@BeforeClass
-	static public void setUpClass() throws Exception {
-		LogManager.getLogManager().readConfiguration(new FileInputStream("logging.properties"));
-	}
+	static public void setUpClass() throws Exception {}
 
 	@Before
 	public void setUp() {
@@ -129,7 +128,7 @@ public class MorphDBConverterTest {
 		assertEquals(2099, file.length());
 	}
 
-	//@Ignore
+	@Ignore
 	@Test
 	public void downloadZippedMorphBD() {
 		File file = testable.downloadZippedMorphBD();
