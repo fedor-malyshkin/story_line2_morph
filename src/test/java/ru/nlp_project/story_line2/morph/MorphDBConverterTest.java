@@ -71,7 +71,7 @@ public class MorphDBConverterTest {
 		File tempFile = File.createTempFile("test", "zip");
 		FileOutputStream fos = new FileOutputStream(tempFile);
 		IOUtils.copy(stream, fos);
-		testable.readZippedMorphDB(tempFile);
+		testable.convertZippedMorphDB(tempFile);
 		ArgumentCaptor<Paradigm> argument = ArgumentCaptor.forClass(Paradigm.class);
 		verify(testable, atLeast(1)).addParadigm(argument.capture());
 		assertEquals(

@@ -1,10 +1,7 @@
 package ru.nlp_project.story_line2.morph.hmm_pos_tagger;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,6 +35,12 @@ public class OpencorporaMarkupReaderTest {
 		IOUtils.copy(stream, fos);
 		testable.readZippedMarkupFile(tempFile);
 
+		verify(dbBuilder, times(1)).startLearning();
+		verify(dbBuilder, times(1)).endLearning();
+		
+		verify(dbBuilder, atLeast(100)).startSentence();
+		verify(dbBuilder, atLeast(100)).endSentence();
+		
 		verify(dbBuilder, atLeast(100)).addTokent(anyString(), any(GrammemeEnum.class));
 		
 	}

@@ -225,7 +225,9 @@ public class OpencorporaMarkupReader {
 		try {
 			File uncompressZip = uncompressZip(filemarkup, "annot.opcorpora.no_ambig.xml");
 			FileInputStream fis = new FileInputStream(uncompressZip);
+			builder.startLearning();
 			readMarkupFile(fis);
+			builder.endLearning();
 			IOUtils.closeQuietly(fis);
 		} catch (Exception ex) {
 			throw new IllegalStateException(ex.getMessage(), ex);

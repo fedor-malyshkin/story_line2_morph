@@ -74,7 +74,7 @@ public class MorphDBConverter {
 		MorphDBConverter converter = new MorphDBConverter();
 		converter.initialize();
 		File zippedMorphBD = converter.downloadZippedMorphBD();
-		converter.readZippedMorphDB(zippedMorphBD);
+		converter.convertZippedMorphDB(zippedMorphBD);
 	}
 
 	private Logger log;
@@ -429,7 +429,7 @@ public class MorphDBConverter {
 	 * 
 	 * @param zippedMorphBD
 	 */
-	public void readZippedMorphDB(File zippedMorphBD) {
+	public void convertZippedMorphDB(File zippedMorphBD) {
 		try {
 			File uncompressZip = uncompressZip(zippedMorphBD, "dict.opcorpora.xml");
 			FileInputStream fis = new FileInputStream(uncompressZip);

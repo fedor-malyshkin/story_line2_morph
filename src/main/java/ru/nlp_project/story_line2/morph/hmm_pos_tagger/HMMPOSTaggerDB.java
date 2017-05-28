@@ -25,22 +25,20 @@ public class HMMPOSTaggerDB {
 	private Map<WordGrammemePair, Float> observationStatePropability = new HashMap<>();
 	private Map<GrammemeEnum, Integer> allStateStats = new HashMap<>();
 
-	public void startStatePropability(GrammemeEnum k, float prob) {
-		startStatePropability.put(k, prob);
+	void allStateStats(Map<GrammemeEnum, Integer> allStateStats) {
+		this.allStateStats = allStateStats;
 	}
 
-	public void biGrammPropability(GrammemePair k, float prob) {
+	void biGrammPropability(GrammemePair k, float prob) {
 		biGrammPropability.put(k, prob);
 	}
 
-	public void observationStatePropability(WordGrammemePair k, float prob) {
-		observationStatePropability.put(k, prob);
+	Map<GrammemeEnum, Integer> getAllStateStats() {
+		return allStateStats;
 	}
 
-	public float getStartStatePropability(GrammemeEnum k) {
-		if (k == null)
-			throw new IllegalArgumentException("POS must be not null");
-		return startStatePropability.get(k);
+	Map<GrammemePair, Float> getBiGrammPropability() {
+		return biGrammPropability;
 	}
 
 	public float getBiGrammPropability(GrammemeEnum curr, GrammemeEnum prev) {
@@ -50,6 +48,10 @@ public class HMMPOSTaggerDB {
 			throw new IllegalArgumentException("POS must be not null");
 
 		return biGrammPropability.get(new GrammemePair(curr, prev));
+	}
+
+	Map<WordGrammemePair, Float> getObservationStatePropability() {
+		return observationStatePropability;
 	}
 
 	public float getObservationStatePropability(String word, GrammemeEnum pos) {
@@ -67,8 +69,38 @@ public class HMMPOSTaggerDB {
 
 	}
 
-	public void allStateStats(Map<GrammemeEnum, Integer> allStateStats) {
+	Map<GrammemeEnum, Float> getStartStatePropability() {
+		return startStatePropability;
+	}
+
+	public float getStartStatePropability(GrammemeEnum k) {
+		if (k == null)
+			throw new IllegalArgumentException("POS must be not null");
+		return startStatePropability.get(k);
+	}
+
+	void observationStatePropability(WordGrammemePair k, float prob) {
+		observationStatePropability.put(k, prob);
+	}
+
+	void setAllStateStats(Map<GrammemeEnum, Integer> allStateStats) {
 		this.allStateStats = allStateStats;
+	}
+
+	void setBiGrammPropability(Map<GrammemePair, Float> biGrammPropability) {
+		this.biGrammPropability = biGrammPropability;
+	}
+
+	void setObservationStatePropability(Map<WordGrammemePair, Float> observationStatePropability) {
+		this.observationStatePropability = observationStatePropability;
+	}
+
+	void setStartStatePropability(Map<GrammemeEnum, Float> startStatePropability) {
+		this.startStatePropability = startStatePropability;
+	}
+
+	void startStatePropability(GrammemeEnum k, float prob) {
+		startStatePropability.put(k, prob);
 	}
 
 
