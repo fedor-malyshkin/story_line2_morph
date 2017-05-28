@@ -122,8 +122,12 @@ public class HMMPOSTaggerDBBuilderImpl implements IHMMPOSTaggerDBBuilder {
 		// обучающей выборке)
 		float denom = startStateStats.values().stream().reduce(0, Integer::sum);
 		Grammemes.ALL_POS.forEach(pos -> {
-			float count = startStateStats.getOrDefault(pos, 1);
-			db.startStatePropability(pos, (float) count / denom);
+			Integer count = startStateStats.get(pos);
+			// в случае отсуствия статистики -- выставляем малую вероятность
+			if (null != count)
+				db.startStatePropability(pos, (float) count / denom);
+			else
+				db.startStatePropability(pos, (float) 1 / Integer.MAX_VALUE);
 		});
 
 
@@ -132,9 +136,13 @@ public class HMMPOSTaggerDBBuilderImpl implements IHMMPOSTaggerDBBuilder {
 		Grammemes.ALL_POS.forEach(posCurr -> {
 			Grammemes.ALL_POS.forEach(posPrev -> {
 				GrammemePair pair = new GrammemePair(posCurr, posPrev);
-				float count = biGrammStats.getOrDefault(pair, 1);
-				float den = noLastStateStats.getOrDefault(posPrev, 1);
-				db.biGrammPropability(pair, (float) count / den);
+				Integer count = biGrammStats.get(pair);
+				// в случае отсуствия статистики -- выставляем малую вероятность
+				if (null != count) {
+					float den = noLastStateStats.getOrDefault(posPrev, 1);
+					db.biGrammPropability(pair, (float) count / den);
+				} else
+					db.biGrammPropability(pair, (float) 1 / Integer.MAX_VALUE);
 			});
 		});
 

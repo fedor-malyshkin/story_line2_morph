@@ -62,7 +62,8 @@ public class HMMPOSTaggerDB {
 				observationStatePropability.get(new WordGrammemePair(word.toLowerCase(), pos));
 		if (null != result)
 			return result;
-		return 1f / allStateStats.getOrDefault(pos, Integer.MAX_VALUE);
+		else
+			return 1f / allStateStats.getOrDefault(pos, Integer.MAX_VALUE);
 
 	}
 

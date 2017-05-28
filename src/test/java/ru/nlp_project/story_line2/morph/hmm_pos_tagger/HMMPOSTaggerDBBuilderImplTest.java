@@ -3,9 +3,7 @@ package ru.nlp_project.story_line2.morph.hmm_pos_tagger;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,17 +60,17 @@ public class HMMPOSTaggerDBBuilderImplTest {
 		// present
 		assertThat(taggerDB.getStartStatePropability(GrammemeEnum.noun)).isEqualTo(1);
 		// absent
-		assertThat(taggerDB.getStartStatePropability(GrammemeEnum.adj)).isEqualTo(0.01f);
+		assertThat(taggerDB.getStartStatePropability(GrammemeEnum.adj)).isLessThan(0.01f);
 
 		// absent
 		assertThat(taggerDB.getObservationStatePropability("дом", GrammemeEnum.verb))
 				.isEqualTo(0.01f);
-		
+
 		// absent
 		assertThat(taggerDB.getBiGrammPropability(GrammemeEnum.verb, GrammemeEnum.verb))
-				.isEqualTo(1f/12);
-		
-		
+				.isLessThan(0.0001f);
+
+
 
 	}
 
