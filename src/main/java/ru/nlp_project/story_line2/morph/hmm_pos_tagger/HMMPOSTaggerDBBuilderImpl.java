@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import ru.nlp_project.story_line2.morph.GrammemeEnum;
-import ru.nlp_project.story_line2.morph.GrammemeUtils;
 import ru.nlp_project.story_line2.morph.Grammemes;
 
 public class HMMPOSTaggerDBBuilderImpl implements IHMMPOSTaggerDBBuilder {

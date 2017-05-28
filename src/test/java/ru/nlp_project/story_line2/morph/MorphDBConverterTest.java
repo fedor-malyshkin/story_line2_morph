@@ -10,11 +10,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.LogManager;
 
+import org.apache.commons.io.IOUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -68,7 +68,10 @@ public class MorphDBConverterTest {
 		InputStream stream = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream("ru/nlp_project/story_line2/morph/test2.zip");
 		testable = spy(testable);
-		testable.convertZippedMorphDB(stream);
+		File tempFile = File.createTempFile("test", "zip");
+		FileOutputStream fos = new FileOutputStream(tempFile);
+		IOUtils.copy(stream, fos);
+		testable.readZippedMorphDB(tempFile);
 		ArgumentCaptor<Paradigm> argument = ArgumentCaptor.forClass(Paradigm.class);
 		verify(testable, atLeast(1)).addParadigm(argument.capture());
 		assertEquals(
@@ -123,7 +126,10 @@ public class MorphDBConverterTest {
 	public void testUncompressZip() throws IOException {
 		InputStream stream = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream("ru/nlp_project/story_line2/morph/test.zip");
-		File file = testable.uncompressZip(stream, "test.json");
+		File tempFile = File.createTempFile("test", "zip");
+		FileOutputStream fos = new FileOutputStream(tempFile);
+		IOUtils.copy(stream, fos);
+		File file = testable.uncompressZip(tempFile, "test.json");
 		assertTrue(file.exists());
 		assertEquals(2099, file.length());
 	}

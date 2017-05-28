@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonGenerator.Feature;
 
 import ru.nlp_project.story_line2.morph.EndingModel.Ending;
 
@@ -75,8 +74,7 @@ public class MorphDBConverter {
 		MorphDBConverter converter = new MorphDBConverter();
 		converter.initialize();
 		File zippedMorphBD = converter.downloadZippedMorphBD();
-		FileInputStream fileInputStream = new FileInputStream(zippedMorphBD);
-		converter.convertZippedMorphDB(fileInputStream);
+		converter.readZippedMorphDB(zippedMorphBD);
 	}
 
 	private Logger log;
@@ -429,11 +427,11 @@ public class MorphDBConverter {
 	/**
 	 * Прочитать запакованую морфологическую БД.
 	 * 
-	 * @param inputStream
+	 * @param zippedMorphBD
 	 */
-	public void convertZippedMorphDB(InputStream inputStream) {
+	public void readZippedMorphDB(File zippedMorphBD) {
 		try {
-			File uncompressZip = uncompressZip(inputStream, "dict.opcorpora.xml");
+			File uncompressZip = uncompressZip(zippedMorphBD, "dict.opcorpora.xml");
 			FileInputStream fis = new FileInputStream(uncompressZip);
 			log.info("Start converting XML->JSON morph db.");
 			jsonStart();
@@ -446,15 +444,8 @@ public class MorphDBConverter {
 		}
 	}
 
-	File uncompressZip(InputStream inputStream, String entry) throws IOException {
-		File zipFileCmp = File.createTempFile("morph-db", ".zip");
-		FileOutputStream fos = new FileOutputStream(zipFileCmp);
-		zipFileCmp.deleteOnExit();
-
-		IOUtils.copy(inputStream, fos);
-		IOUtils.closeQuietly(fos);
-
-		ZipFile zipFile = new ZipFile(zipFileCmp);
+	File uncompressZip(File zippedMorphBD, String entry) throws IOException {
+		ZipFile zipFile = new ZipFile(zippedMorphBD);
 		InputStream zipIS = zipFile.getInputStream(zipFile.getEntry(entry));
 
 		File xmlFile = File.createTempFile("morph-db", ".xml");
@@ -478,8 +469,8 @@ public class MorphDBConverter {
 			connection.connect();
 			InputStream inputStream = connection.getInputStream();
 			File zipFile = File.createTempFile("morph-db-download", ".zip");
-			fos = new FileOutputStream(zipFile);
-			IOUtils.copy(inputStream, fos);
+			FileOutputStream fos2 = new FileOutputStream(zipFile);
+			IOUtils.copy(inputStream, fos2);
 			return zipFile;
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
