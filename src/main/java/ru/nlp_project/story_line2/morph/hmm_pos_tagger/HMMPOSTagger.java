@@ -1,6 +1,15 @@
 package ru.nlp_project.story_line2.morph.hmm_pos_tagger;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+import ru.nlp_project.story_line2.morph.GrammemeEnum;
+import ru.nlp_project.story_line2.morph.Grammemes;
 
 /**
  * Hidden Markov Model POS-Tagger.
@@ -11,7 +20,12 @@ import java.util.List;
  *
  */
 public class HMMPOSTagger {
+	HMMPOSTaggerDB db = null;
 
+	public HMMPOSTagger(HMMPOSTaggerDB db) {
+		super();
+		this.db = db;
+	}
 
 	public interface IEmissionPropabilityFacade {
 
@@ -152,6 +166,39 @@ public class HMMPOSTagger {
 			}
 		}
 		return argmax;
+	}
+
+	public List<GrammemeEnum> forwardViterbi(List<String> observations) {
+		List<GrammemeEnum> states = new ArrayList<>(Grammemes.ALL_POS);
+		IStartPropabilityFacade sp = new IStartPropabilityFacade() {
+			@Override
+			public double getSP(int state) {
+				GrammemeEnum pos = states.get(state);
+				return db.getStartStatePropability(pos);
+			}
+
+		};
+		IEmissionPropabilityFacade ep = new IEmissionPropabilityFacade() {
+
+			@Override
+			public double getEP(int state, String word) {
+				GrammemeEnum pos = states.get(state);
+				return db.getObservationStatePropability(word, pos);
+			}
+
+		};
+		ITransmissionPropabilityFacade tp = new ITransmissionPropabilityFacade() {
+			@Override
+			public double getTP(int state, int next_state) {
+				GrammemeEnum pos = states.get(state);
+				GrammemeEnum next_pos = states.get(next_state);
+				return db.getBiGrammPropability(next_pos, pos);
+			}
+
+		};
+		int[] res = forwardViterbi(observations, states.size(), sp, ep, tp);
+		return Arrays.stream(res, 0, res.length).mapToObj(i -> states.get(i))
+				.collect(Collectors.toList());
 	}
 
 
