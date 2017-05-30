@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -23,12 +21,12 @@ import ru.nlp_project.story_line2.morph.GrammemeEnum;
  */
 public class HMMPOSTaggerDBWriter {
 	private HMMPOSTaggerDB db = null;
-	private Logger log;
+	//private Logger log;
 	private JsonFactory jsonFactory;
 	private JsonGenerator jg;
 
 	public HMMPOSTaggerDBWriter(HMMPOSTaggerDB db) {
-		this.log = LoggerFactory.getLogger(this.getClass());
+		//this.log = LoggerFactory.getLogger(this.getClass());
 		this.db = db;
 	}
 

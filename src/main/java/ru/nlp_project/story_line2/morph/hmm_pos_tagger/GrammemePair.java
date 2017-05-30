@@ -8,7 +8,7 @@ import ru.nlp_project.story_line2.morph.GrammemeEnum;
  * @author fedor
  *
  */
-public class GrammemePair {
+class GrammemePair {
 	private GrammemeEnum curr;
 	private GrammemeEnum prev;
 

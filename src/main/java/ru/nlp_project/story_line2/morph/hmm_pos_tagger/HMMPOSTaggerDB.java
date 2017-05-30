@@ -103,5 +103,4 @@ public class HMMPOSTaggerDB {
 		startStatePropability.put(k, prob);
 	}
 
-
 }

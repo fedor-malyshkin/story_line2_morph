@@ -2,7 +2,7 @@ package ru.nlp_project.story_line2.morph.hmm_pos_tagger;
 
 import ru.nlp_project.story_line2.morph.GrammemeEnum;
 
-public class WordGrammemePair {
+class WordGrammemePair {
 	private String word;
 
 
