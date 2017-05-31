@@ -119,14 +119,14 @@ public class HMMPOSTaggerDBBuilderImpl implements IHMMPOSTaggerDBBuilder {
 	private void fillDbWithStatistics() {
 		// P(St) if t=0 (перебором всех частей речи решаем ситуацию с пропущенными частями в
 		// обучающей выборке)
-		float denom = startStateStats.values().stream().reduce(0, Integer::sum);
+		double denom = startStateStats.values().stream().reduce(0, Integer::sum);
 		Grammemes.ALL_POS.forEach(pos -> {
 			Integer count = startStateStats.get(pos);
 			// в случае отсуствия статистики -- выставляем малую вероятность
 			if (null != count)
-				db.startStatePropability(pos, (float) count / denom);
+				db.addStartStatePropability(pos, (double) count / denom);
 			else
-				db.startStatePropability(pos, (float) 1 / Integer.MAX_VALUE);
+				db.addStartStatePropability(pos, (double) 1 / Integer.MAX_VALUE);
 		});
 
 
@@ -138,19 +138,19 @@ public class HMMPOSTaggerDBBuilderImpl implements IHMMPOSTaggerDBBuilder {
 				Integer count = biGrammStats.get(pair);
 				// в случае отсуствия статистики -- выставляем малую вероятность
 				if (null != count) {
-					float den = noLastStateStats.getOrDefault(posPrev, 1);
-					db.biGrammPropability(pair, (float) count / den);
+					double den = noLastStateStats.getOrDefault(posPrev, 1);
+					db.addBiGrammPropability(pair, (double) count / den);
 				} else
-					db.biGrammPropability(pair, (float) 1 / Integer.MAX_VALUE);
+					db.addBiGrammPropability(pair, (double) 1 / Integer.MAX_VALUE);
 			});
 		});
 
 		// P(obs|state)
 		observationStateStats.forEach((k, v) -> {
-			float den = allStateStats.getOrDefault(k.getPos(), 1);
-			db.observationStatePropability(k, (float) v / den);
+			double den = allStateStats.getOrDefault(k.getPos(), 1);
+			db.addObservationStatePropability(k, (double) v / den);
 		});
-		db.allStateStats(allStateStats);
+		db.addAllStateStats(allStateStats);
 
 
 	}

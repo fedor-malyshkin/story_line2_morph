@@ -24,7 +24,7 @@ public class HMMPOSTaggerDBReader {
 	private HMMPOSTaggerDB db;
 	private JsonParser parser;
 
-	HMMPOSTaggerDB read(File file) throws IOException {
+	public HMMPOSTaggerDB read(File file) throws IOException {
 		db = new HMMPOSTaggerDB();
 		FileInputStream fis = new FileInputStream(file);
 		readIntrnal(fis);
@@ -75,13 +75,13 @@ public class HMMPOSTaggerDBReader {
 		parser.nextToken(); // skip field_name
 		parser.nextToken(); // skip start_array
 
-		Map<GrammemePair, Float> biGrammPropability = new HashMap<>();
+		Map<GrammemePair, Double> biGrammPropability = new HashMap<>();
 		while (readBiGrammPropabilityEntry(biGrammPropability))
 			parser.nextToken(); // skip end_object
 		db.setBiGrammPropability(biGrammPropability);
 	}
 
-	private boolean readBiGrammPropabilityEntry(Map<GrammemePair, Float> biGrammPropability)
+	private boolean readBiGrammPropabilityEntry(Map<GrammemePair, Double> biGrammPropability)
 			throws IOException {
 		if (parser.getCurrentToken() != JsonToken.START_OBJECT)
 			return false;
@@ -102,11 +102,11 @@ public class HMMPOSTaggerDBReader {
 		parser.nextToken();
 		// goto propb value
 		parser.nextToken();
-		float floatValue = parser.getFloatValue();
+		double doubleValue = parser.getDoubleValue();
 		// skip propb value
 		parser.nextToken();
 
-		biGrammPropability.put(new GrammemePair(curr, prev), floatValue);
+		biGrammPropability.put(new GrammemePair(curr, prev), doubleValue);
 		return true;
 	}
 
@@ -128,14 +128,14 @@ public class HMMPOSTaggerDBReader {
 		parser.nextToken(); // skip field_name
 		parser.nextToken(); // skip start_array
 
-		Map<WordGrammemePair, Float> observationStatePropability = new HashMap<>();
+		Map<WordGrammemePair, Double> observationStatePropability = new HashMap<>();
 		while (readObservationStateStatsEntry(observationStatePropability))
 			parser.nextToken(); // skip end_object
 		db.setObservationStatePropability(observationStatePropability);
 	}
 
 	private boolean readObservationStateStatsEntry(
-			Map<WordGrammemePair, Float> observationStatePropability) throws IOException {
+			Map<WordGrammemePair, Double> observationStatePropability) throws IOException {
 		if (parser.getCurrentToken() != JsonToken.START_OBJECT)
 			return false;
 		// goto word
@@ -154,11 +154,11 @@ public class HMMPOSTaggerDBReader {
 		parser.nextToken();
 		// goto propb value
 		parser.nextToken();
-		float floatValue = parser.getFloatValue();
+		double doubleValue = parser.getDoubleValue();
 		// skip propb value
 		parser.nextToken();
 
-		observationStatePropability.put(new WordGrammemePair(wordText, pos), floatValue);
+		observationStatePropability.put(new WordGrammemePair(wordText, pos), doubleValue);
 		return true;
 	}
 
@@ -170,14 +170,14 @@ public class HMMPOSTaggerDBReader {
 		parser.nextToken(); // skip field_name
 		parser.nextToken(); // skip start_array
 
-		Map<GrammemeEnum, Float> startStatePropability = new HashMap<>();
+		Map<GrammemeEnum, Double> startStatePropability = new HashMap<>();
 		while (readStartStateStatsEntry(startStatePropability))
 			parser.nextToken(); // skip end_object
 		db.setStartStatePropability(startStatePropability);
 	}
 
 	// starts on start_object
-	private boolean readStartStateStatsEntry(Map<GrammemeEnum, Float> startStatePropability)
+	private boolean readStartStateStatsEntry(Map<GrammemeEnum, Double> startStatePropability)
 			throws IOException {
 		if (parser.getCurrentToken() != JsonToken.START_OBJECT)
 			return false;
@@ -191,11 +191,11 @@ public class HMMPOSTaggerDBReader {
 		parser.nextToken();
 		// goto propb value
 		parser.nextToken();
-		float floatValue = parser.getFloatValue();
+		double doubleValue = parser.getDoubleValue();
 		// skip propb value
 		parser.nextToken();
 
-		startStatePropability.put(pos, floatValue);
+		startStatePropability.put(pos, doubleValue);
 		return true;
 	}
 

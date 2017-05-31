@@ -20,28 +20,36 @@ import ru.nlp_project.story_line2.morph.GrammemeEnum;
  */
 public class HMMPOSTaggerDB {
 
-	private Map<GrammemeEnum, Float> startStatePropability = new HashMap<>();
-	private Map<GrammemePair, Float> biGrammPropability = new HashMap<>();
-	private Map<WordGrammemePair, Float> observationStatePropability = new HashMap<>();
+	private Map<GrammemeEnum, Double> startStatePropability = new HashMap<>();
+	private Map<GrammemePair, Double> biGrammPropability = new HashMap<>();
+	private Map<WordGrammemePair, Double> observationStatePropability = new HashMap<>();
 	private Map<GrammemeEnum, Integer> allStateStats = new HashMap<>();
 
-	void allStateStats(Map<GrammemeEnum, Integer> allStateStats) {
+	void addAllStateStats(Map<GrammemeEnum, Integer> allStateStats) {
 		this.allStateStats = allStateStats;
 	}
 
-	void biGrammPropability(GrammemePair k, float prob) {
+	void addBiGrammPropability(GrammemePair k, double prob) {
 		biGrammPropability.put(k, prob);
 	}
 
-	Map<GrammemeEnum, Integer> getAllStateStats() {
+	void addObservationStatePropability(WordGrammemePair k, double prob) {
+		observationStatePropability.put(k, prob);
+	}
+
+	void addStartStatePropability(GrammemeEnum k, double prob) {
+		startStatePropability.put(k, prob);
+	}
+
+	 Map<GrammemeEnum, Integer> getAllStateStats() {
 		return allStateStats;
 	}
 
-	Map<GrammemePair, Float> getBiGrammPropability() {
+	Map<GrammemePair, Double> getBiGrammPropability() {
 		return biGrammPropability;
 	}
 
-	public float getBiGrammPropability(GrammemeEnum curr, GrammemeEnum prev) {
+	 double getBiGrammPropability(GrammemeEnum curr, GrammemeEnum prev) {
 		if (curr == null)
 			throw new IllegalArgumentException("POS must be not null");
 		if (prev == null)
@@ -50,17 +58,17 @@ public class HMMPOSTaggerDB {
 		return biGrammPropability.get(new GrammemePair(curr, prev));
 	}
 
-	Map<WordGrammemePair, Float> getObservationStatePropability() {
+	Map<WordGrammemePair, Double> getObservationStatePropability() {
 		return observationStatePropability;
 	}
 
-	public float getObservationStatePropability(String word, GrammemeEnum pos) {
+	 double getObservationStatePropability(String word, GrammemeEnum pos) {
 		if (word == null || word.isEmpty())
 			throw new IllegalArgumentException("word must be not null/empty");
 		if (pos == null)
 			throw new IllegalArgumentException("POS must be not null");
 
-		Float result =
+		Double result =
 				observationStatePropability.get(new WordGrammemePair(word.toLowerCase(), pos));
 		if (null != result)
 			return result;
@@ -69,38 +77,30 @@ public class HMMPOSTaggerDB {
 
 	}
 
-	Map<GrammemeEnum, Float> getStartStatePropability() {
+	Map<GrammemeEnum, Double> getStartStatePropability() {
 		return startStatePropability;
 	}
 
-	public float getStartStatePropability(GrammemeEnum k) {
+	double getStartStatePropability(GrammemeEnum k) {
 		if (k == null)
 			throw new IllegalArgumentException("POS must be not null");
 		return startStatePropability.get(k);
-	}
-
-	void observationStatePropability(WordGrammemePair k, float prob) {
-		observationStatePropability.put(k, prob);
 	}
 
 	void setAllStateStats(Map<GrammemeEnum, Integer> allStateStats) {
 		this.allStateStats = allStateStats;
 	}
 
-	void setBiGrammPropability(Map<GrammemePair, Float> biGrammPropability) {
+	void setBiGrammPropability(Map<GrammemePair, Double> biGrammPropability) {
 		this.biGrammPropability = biGrammPropability;
 	}
 
-	void setObservationStatePropability(Map<WordGrammemePair, Float> observationStatePropability) {
+	void setObservationStatePropability(Map<WordGrammemePair, Double> observationStatePropability) {
 		this.observationStatePropability = observationStatePropability;
 	}
 
-	void setStartStatePropability(Map<GrammemeEnum, Float> startStatePropability) {
+	void setStartStatePropability(Map<GrammemeEnum, Double> startStatePropability) {
 		this.startStatePropability = startStatePropability;
-	}
-
-	void startStatePropability(GrammemeEnum k, float prob) {
-		startStatePropability.put(k, prob);
 	}
 
 }

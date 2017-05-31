@@ -76,8 +76,8 @@ public class HMMPOSTaggerDBWriter {
 	private void writeBiGrammPropability() throws IOException {
 		jg.writeFieldName("bi-gramm-propb");
 		jg.writeStartArray();
-		Map<GrammemePair, Float> propb = db.getBiGrammPropability();
-		for (Entry<GrammemePair, Float> entry : propb.entrySet()) {
+		Map<GrammemePair, Double> propb = db.getBiGrammPropability();
+		for (Entry<GrammemePair, Double> entry : propb.entrySet()) {
 			jg.writeStartObject();
 			jg.writeFieldName("curr");
 			jg.writeString(entry.getKey().getCurr().toString());
@@ -93,8 +93,8 @@ public class HMMPOSTaggerDBWriter {
 	private void writeObservationStateStats() throws IOException {
 		jg.writeFieldName("obs-state-propb");
 		jg.writeStartArray();
-		Map<WordGrammemePair, Float> propb = db.getObservationStatePropability();
-		for (Entry<WordGrammemePair, Float> entry : propb.entrySet()) {
+		Map<WordGrammemePair, Double> propb = db.getObservationStatePropability();
+		for (Entry<WordGrammemePair, Double> entry : propb.entrySet()) {
 			jg.writeStartObject();
 			jg.writeFieldName("word");
 			jg.writeString(entry.getKey().getWord());
@@ -110,8 +110,8 @@ public class HMMPOSTaggerDBWriter {
 	private void writeStartStateStats() throws IOException {
 		jg.writeFieldName("start-state-propb");
 		jg.writeStartArray();
-		Map<GrammemeEnum, Float> propb = db.getStartStatePropability();
-		for (Entry<GrammemeEnum, Float> entry : propb.entrySet()) {
+		Map<GrammemeEnum, Double> propb = db.getStartStatePropability();
+		for (Entry<GrammemeEnum, Double> entry : propb.entrySet()) {
 			jg.writeStartObject();
 			jg.writeFieldName("pos");
 			jg.writeString(entry.getKey().toString());
