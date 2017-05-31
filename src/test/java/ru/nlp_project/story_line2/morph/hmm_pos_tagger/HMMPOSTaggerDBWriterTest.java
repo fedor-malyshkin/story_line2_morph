@@ -3,6 +3,7 @@ package ru.nlp_project.story_line2.morph.hmm_pos_tagger;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +44,9 @@ public class HMMPOSTaggerDBWriterTest {
 		assertThat(tempFile.length()).isGreaterThan(1_000_000);
 		// read
 		HMMPOSTaggerDBReader testable2 = new HMMPOSTaggerDBReader();
-		HMMPOSTaggerDB db = testable2.read(tempFile);
+		FileInputStream fis = new FileInputStream(tempFile);
+		HMMPOSTaggerDB db = testable2.read(fis);
+		IOUtils.closeQuietly(fis);
 		// propability more than 0.01
 		assertThat(db.getBiGrammPropability(GrammemeEnum.noun, GrammemeEnum.verb))
 				.isGreaterThan(0.01f);

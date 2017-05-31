@@ -1,12 +1,9 @@
 package ru.nlp_project.story_line2.morph.hmm_pos_tagger;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -24,11 +21,9 @@ public class HMMPOSTaggerDBReader {
 	private HMMPOSTaggerDB db;
 	private JsonParser parser;
 
-	public HMMPOSTaggerDB read(File file) throws IOException {
+	public HMMPOSTaggerDB read(InputStream is) throws IOException {
 		db = new HMMPOSTaggerDB();
-		FileInputStream fis = new FileInputStream(file);
-		readIntrnal(fis);
-		IOUtils.closeQuietly(fis);
+		readIntrnal(is);
 		return db;
 	}
 
@@ -110,9 +105,9 @@ public class HMMPOSTaggerDBReader {
 		return true;
 	}
 
-	private void readIntrnal(FileInputStream fis) throws IOException {
+	private void readIntrnal(InputStream is) throws IOException {
 		JsonFactory jsonFactory = new JsonFactory(); // or, for data binding,
-		parser = jsonFactory.createParser(fis);
+		parser = jsonFactory.createParser(is);
 
 		skipPrefix();
 		readStartStateStats();
